@@ -1,0 +1,29 @@
+{
+  "name": "@samhwang/esbuild-jest-transformer",
+  "version": "0.1.0",
+  "description": "Jest transformer using ESBuild",
+  "author": "Sam Huynh <samhwang2112.dev@gmail.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samhwang/esbuild-jest-transform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samhwang/esbuild-jest-transform/issues"
+  },
+  "homepage": "https://github.com/samhwang/esbuild-jest-transform#readme",
+  "keywords": [
+    "esbuild",
+    "jest",
+    "test"
+  ],
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint --ext ts .",
+    "format": "prettier --write \"**/*.ts\"",
+    "typecheck": "tsc"
+  },
+  "peerDependencies": {
+    "esbuild": "^0.14.30"
+  }
+}

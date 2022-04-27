@@ -1,0 +1,6 @@
+{
+  "packages/esbuild-jest/**/*.ts": [
+    "cd packages/esbuild-jest && eslint --cache --fix",
+    "prettier --write"
+  ]
+}
