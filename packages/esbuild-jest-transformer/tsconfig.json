@@ -1,7 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./build"
+    "outDir": "./build",
+    "target": "ES5",
+    "module": "commonjs"
   },
-  "include": ["./src", "jest.config.ts"]
+  "include": ["./*.ts"],
+  "exclude": ["build"]
 }
