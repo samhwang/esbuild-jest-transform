@@ -4,9 +4,8 @@ import { Loader } from 'esbuild';
 import { DEFAULT_LOADERS, DEFAULT_NODE_TARGETS } from './defaults';
 
 export function getDefaultTarget(): string {
-  return (
-    DEFAULT_NODE_TARGETS.get(process.version.match(/v(\d+)/)![1]) || 'es2018'
-  );
+  const currentNodeVersion = process.version.match(/v(\d+)/)![1];
+  return DEFAULT_NODE_TARGETS.get(currentNodeVersion) || 'es2018';
 }
 
 export function getFileExtensions(fileName: string): string {
@@ -15,9 +14,7 @@ export function getFileExtensions(fileName: string): string {
 }
 
 export function getDefaultLoader(extension: Loader): Loader {
-  if (DEFAULT_LOADERS.includes(extension)) return extension;
-
-  return 'text';
+  return DEFAULT_LOADERS.includes(extension) ? extension : 'text';
 }
 
 export function set(obj: any, filePath: string, value: any) {

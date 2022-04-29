@@ -1,6 +1,6 @@
 import * as crypto from 'node:crypto';
 import createCacheKey from '@jest/create-cache-key-function';
-import { Transformer, TransformOptions as JestOptions } from '@jest/transform';
+import { Transformer } from '@jest/transform';
 import {
   transformSync,
   transform,
@@ -9,28 +9,39 @@ import {
 } from 'esbuild';
 import { getDefaultTarget, getFileExtensions, getDefaultLoader } from './utils';
 
+export interface TransformerOptions
+  extends Pick<
+    ESBuildOptions,
+    'jsxFragment' | 'jsxFactory' | 'target' | 'format' | 'sourcemap'
+  > {
+  loaders?: Record<string, Loader>;
+}
+
 function buildEsbuildTransformOpts(
   filename: string,
-  esbuildOptions?: ESBuildOptions
+  options?: TransformerOptions
 ): ESBuildOptions {
-  const sourcemap = esbuildOptions?.sourcemap ?? 'inline';
-  const target = esbuildOptions?.target ?? getDefaultTarget();
+  const sourcemap = options?.sourcemap ?? 'inline';
+  const target = options?.target ?? getDefaultTarget();
 
   const extension = getFileExtensions(filename).slice(1);
-  const loader =
-    esbuildOptions?.loader ?? getDefaultLoader(extension as Loader);
+  const loader: Loader =
+    options?.loaders && options.loaders[extension]
+      ? options.loaders[extension]
+      : getDefaultLoader(extension as Loader);
 
   return {
     sourcemap,
     target,
     loader,
-    ...esbuildOptions,
+    sourcefile: filename,
+    ...options,
   };
 }
 
 function createTransformer(
-  esbuildTransformOptions: ESBuildOptions
-): Transformer<ESBuildOptions> {
+  esbuildTransformOptions?: TransformerOptions
+): Transformer<TransformerOptions> {
   return {
     canInstrument: true,
     process(content, filename, jestOpts) {
@@ -42,7 +53,6 @@ function createTransformer(
       return transformSync(content, {
         ...esbuildOpts,
         format: jestOpts.supportsStaticESM ? 'esm' : 'cjs',
-        sourcefile: filename,
       });
     },
     processAsync(content, filename) {
@@ -54,10 +64,9 @@ function createTransformer(
       return transform(content, {
         ...esbuildOpts,
         format: 'esm',
-        sourcefile: filename,
       });
     },
-    getCacheKey(content, filename, ...opts) {
+    getCacheKey(content, filename, options) {
       const esbuildOpts = buildEsbuildTransformOpts(filename);
       const cacheKeyFunction = createCacheKey(
         [],
@@ -65,9 +74,7 @@ function createTransformer(
       );
 
       // @ts-expect-error - type overload is confused, and NewGetCacheKeyFunction is not exported from @jest/types
-      const baseCacheKey = cacheKeyFunction(content, filename, ...opts);
-
-      const options: JestOptions = opts[0];
+      const baseCacheKey = cacheKeyFunction(content, filename, options);
 
       return crypto
         .createHash('md5')
