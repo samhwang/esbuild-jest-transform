@@ -1,0 +1,11 @@
+{
+  "name": "node-es6-example",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@samhwang/esbuild-jest-transformer": "workspace:*",
+    "esbuild": "^0.14.30",
+    "jest": "^27.5.1"
+  }
+}
