@@ -67,9 +67,7 @@ function createTransformer(
       // @ts-expect-error - type overload is confused, and NewGetCacheKeyFunction is not exported from @jest/types
       const baseCacheKey = cacheKeyFunction(content, filename, ...opts);
 
-      const options: JestOptions | undefined =
-        // @ts-expect-error - signature mismatch between Jest <27 og >=27
-        typeof opts[0] === 'string' ? opts[1] : opts[0];
+      const options: JestOptions = opts[0];
 
       return crypto
         .createHash('md5')
