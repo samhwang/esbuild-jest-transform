@@ -1,17 +1,7 @@
 import * as process from 'node:process';
 import * as path from 'node:path';
 import { Loader } from 'esbuild';
-
-export const DEFAULT_LOADERS: Loader[] = ['js', 'jsx', 'ts', 'tsx', 'json'];
-
-const DEFAULT_NODE_TARGETS = new Map([
-  ['12', 'es2018'],
-  ['13', 'es2019'],
-  ['14', 'es2020'],
-  ['15', 'es2021'],
-  ['16', 'es2021'],
-  ['17', 'es2022'],
-]);
+import { DEFAULT_LOADERS, DEFAULT_NODE_TARGETS } from './defaults';
 
 export function getDefaultTarget(): string {
   return (
@@ -29,6 +19,7 @@ export function getDefaultLoader(extension: Loader): Loader {
 
   return 'text';
 }
+
 export function set(obj: any, filePath: string, value: any) {
   let o = obj;
   const parents = filePath.split('.');

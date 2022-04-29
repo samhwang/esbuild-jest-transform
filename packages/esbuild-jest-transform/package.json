@@ -22,7 +22,7 @@
     "lint": "eslint --ext ts .",
     "build": "pnpm lint && pnpm typecheck",
     "format": "prettier --write \"**/*.ts\"",
-    "typecheck": "tsc"
+    "typecheck": "rimraf build && tsc"
   },
   "main": "build/index.js",
   "files": [

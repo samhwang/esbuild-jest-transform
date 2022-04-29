@@ -9,8 +9,6 @@ import {
 } from 'esbuild';
 import { getDefaultTarget, getFileExtensions, getDefaultLoader } from './utils';
 
-export type { ESBuildOptions };
-
 function buildEsbuildTransformOpts(
   filename: string,
   esbuildOptions?: ESBuildOptions
@@ -32,7 +30,7 @@ function buildEsbuildTransformOpts(
 
 function createTransformer(
   esbuildTransformOptions: ESBuildOptions
-): Transformer {
+): Transformer<ESBuildOptions> {
   return {
     canInstrument: true,
     process(content, filename, jestOpts) {
@@ -44,6 +42,7 @@ function createTransformer(
       return transformSync(content, {
         ...esbuildOpts,
         format: jestOpts.supportsStaticESM ? 'esm' : 'cjs',
+        sourcefile: filename,
       });
     },
     processAsync(content, filename) {
@@ -55,6 +54,7 @@ function createTransformer(
       return transform(content, {
         ...esbuildOpts,
         format: 'esm',
+        sourcefile: filename,
       });
     },
     getCacheKey(content, filename, ...opts) {
