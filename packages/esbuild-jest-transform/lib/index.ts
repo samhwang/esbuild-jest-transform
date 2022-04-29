@@ -1,49 +1,15 @@
 import * as crypto from 'node:crypto';
 import createCacheKey from '@jest/create-cache-key-function';
 import { Transformer } from '@jest/transform';
-import {
-  transformSync,
-  transform,
-  TransformOptions as ESBuildOptions,
-  Loader,
-} from 'esbuild';
-import { getDefaultTarget, getFileExtensions, getDefaultLoader } from './utils';
+import { transformSync, transform } from 'esbuild';
+import { buildEsbuildTransformOpts, TransformerOptions } from './utils';
 
-export interface TransformerOptions
-  extends Pick<
-    ESBuildOptions,
-    'jsxFragment' | 'jsxFactory' | 'target' | 'format' | 'sourcemap'
-  > {
-  loaders?: Record<string, Loader>;
-}
-
-function buildEsbuildTransformOpts(
-  filename: string,
-  options?: TransformerOptions
-): ESBuildOptions {
-  const sourcemap = options?.sourcemap ?? 'inline';
-  const target = options?.target ?? getDefaultTarget();
-
-  const extension = getFileExtensions(filename).slice(1);
-  const loader: Loader =
-    options?.loaders && options.loaders[extension]
-      ? options.loaders[extension]
-      : getDefaultLoader(extension as Loader);
-
-  return {
-    sourcemap,
-    target,
-    loader,
-    sourcefile: filename,
-    ...options,
-  };
-}
+export type { TransformerOptions };
 
 function createTransformer(
   esbuildTransformOptions?: TransformerOptions
 ): Transformer<TransformerOptions> {
   return {
-    canInstrument: true,
     process(content, filename, jestOpts) {
       const esbuildOpts = buildEsbuildTransformOpts(
         filename,
