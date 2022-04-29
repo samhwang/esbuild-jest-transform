@@ -1,5 +1,5 @@
 {
-  "name": "@samhwang/esbuild-jest-transformer",
+  "name": "@samhwang/esbuild-jest-transform",
   "version": "0.1.0",
   "description": "Jest transformer using ESBuild",
   "author": "Sam Huynh <samhwang2112.dev@gmail.com>",

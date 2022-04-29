@@ -11,17 +11,17 @@ A Jest transformer using ESBuild.
 
 [//]: # (# If you use npm)
 
-[//]: # (npm install --save-dev esbuild @samhwang/esbuild-jest-transformer)
+[//]: # (npm install --save-dev esbuild @samhwang/esbuild-jest-transform)
 
 [//]: # ()
 [//]: # (# If you use yarn)
 
-[//]: # (yarn add --dev esbuild @samhwang/esbuild-jest-transformer)
+[//]: # (yarn add --dev esbuild @samhwang/esbuild-jest-transform)
 
 [//]: # ()
 [//]: # (# If you use pnpm)
 
-[//]: # (pnpm add --dev esbuild @samhwang/esbuild-jest-transformer)
+[//]: # (pnpm add --dev esbuild @samhwang/esbuild-jest-transform)
 
 [//]: # (```)
 
@@ -34,7 +34,7 @@ Add this to your jest config.
 ```js
 module.exports = {
   "transform": {
-    "^.+\\.(t|j)sx?$": "@samhwang/esbuild-jest-transformer",
+    "^.+\\.(t|j)sx?$": "@samhwang/esbuild-jest-transform",
   }
 };
 ```

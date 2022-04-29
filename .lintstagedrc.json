@@ -1,6 +1,6 @@
 {
-  "packages/esbuild-jest-transformer/**/*.ts": [
-    "cd packages/esbuild-jest-transformer && eslint --cache --fix",
+  "packages/esbuild-jest-transform/**/*.ts": [
+    "cd packages/esbuild-jest-transform && eslint --cache --fix",
     "prettier --write"
   ]
 }
