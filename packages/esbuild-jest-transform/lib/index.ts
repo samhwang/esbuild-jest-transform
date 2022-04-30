@@ -7,13 +7,13 @@ import { buildEsbuildTransformOpts, TransformerOptions } from './utils';
 export type { TransformerOptions };
 
 function createTransformer(
-  esbuildTransformOptions?: TransformerOptions
-): Transformer<TransformerOptions> {
+  transformerOptions?: TransformerOptions
+): Transformer {
   return {
     process(content, filename, jestOpts) {
       const esbuildOpts = buildEsbuildTransformOpts(
         filename,
-        esbuildTransformOptions
+        transformerOptions
       );
 
       return transformSync(content, {
@@ -24,11 +24,12 @@ function createTransformer(
     processAsync(content, filename) {
       const esbuildOpts = buildEsbuildTransformOpts(
         filename,
-        esbuildTransformOptions
+        transformerOptions
       );
 
       return transform(content, {
         ...esbuildOpts,
+        // Async transform is always going to be esm
         format: 'esm',
       });
     },
