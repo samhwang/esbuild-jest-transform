@@ -22,19 +22,6 @@ function getDefaultLoader(extension: Loader): Loader {
   return DEFAULT_LOADERS.includes(extension) ? extension : 'text';
 }
 
-export function set(obj: any, filePath: string, value: any) {
-  let o = obj;
-  const parents = filePath.split('.');
-  const key = parents.pop() as string;
-
-  parents.forEach((prop) => {
-    if (o[prop] == null) o[prop] = {};
-    o = o[prop];
-  });
-
-  o[key] = value;
-}
-
 function getSourcemapOptions(
   sourcemap?: TransformerOptions['sourcemap']
 ): Partial<TransformerOptions> {

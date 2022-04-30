@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Transformer tests Process Sync Should match transformed snapshot 1`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node-ts/index.test.ts\\"],
+  \\"mappings\\": \\"AAAA,mBAA0B;AAE1B,GAAG,8BAA8B,MAAM;AACrC,QAAM,SAAS,4BAAU,GAAG,CAAC;AAC7B,SAAO,MAAM,EAAE,QAAQ,CAAC;AAC1B,CAAC;\\",
+  \\"names\\": []
+}
+"
+`;
+
+exports[`Transformer tests Process Sync Should match transformed snapshot 2`] = `
+"var import_index = require(\\"./index\\");
+it(\\"Should calculate 1 + 1 = 2\\", () => {
+  const result = (0, import_index.addNumber)(1, 1);
+  expect(result).toEqual(2);
+});
+"
+`;
+
+exports[`Transformer tests Process async Should match transformed snapshot 1`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node-ts/index.test.ts\\"],
+  \\"mappings\\": \\"AAAA;AAEA,GAAG,8BAA8B,MAAM;AACrC,QAAM,SAAS,UAAU,GAAG,CAAC;AAC7B,SAAO,MAAM,EAAE,QAAQ,CAAC;AAC1B,CAAC;\\",
+  \\"names\\": []
+}
+"
+`;
+
+exports[`Transformer tests Process async Should match transformed snapshot 2`] = `
+"import { addNumber } from \\"./index\\";
+it(\\"Should calculate 1 + 1 = 2\\", () => {
+  const result = addNumber(1, 1);
+  expect(result).toEqual(2);
+});
+"
+`;

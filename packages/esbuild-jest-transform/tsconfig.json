@@ -5,6 +5,6 @@
     "target": "ES5",
     "module": "commonjs"
   },
-  "include": ["lib/*.ts"],
+  "include": ["lib/*.ts", "jest.config.ts"],
   "exclude": ["build"]
 }
