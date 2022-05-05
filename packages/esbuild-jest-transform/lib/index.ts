@@ -14,22 +14,32 @@ function createTransformer(transformerOptions?: Options): Transformer {
         transformerOptions
       );
 
-      return transformSync(content, {
+      const { code, map } = transformSync(content, {
         ...esbuildOpts,
         format: jestOpts.supportsStaticESM ? 'esm' : 'cjs',
       });
+
+      return {
+        code,
+        map: map.length >= 2 ? JSON.parse(map) : map,
+      };
     },
-    processAsync(content, filename) {
+    async processAsync(content, filename) {
       const esbuildOpts = buildEsbuildTransformOpts(
         filename,
         transformerOptions
       );
 
-      return transform(content, {
+      const { code, map } = await transform(content, {
         ...esbuildOpts,
         // Async transform is always going to be esm
         format: 'esm',
       });
+
+      return {
+        code,
+        map: map.length >= 2 ? JSON.parse(map) : map,
+      };
     },
     getCacheKey(content, filename, options) {
       const esbuildOpts = buildEsbuildTransformOpts(filename);

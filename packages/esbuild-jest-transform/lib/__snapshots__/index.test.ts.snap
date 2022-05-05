@@ -1,16 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Transformer tests Process Sync Should match transformed snapshot 1`] = `
-"{
-  \\"version\\": 3,
-  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node/index.test.ts\\"],
-  \\"mappings\\": \\"AAAA,mBAA0B;AAE1B,GAAG,8BAA8B,MAAM;AACrC,QAAM,SAAS,4BAAU,GAAG,CAAC;AAC7B,SAAO,MAAM,EAAE,QAAQ,CAAC;AAC1B,CAAC;\\",
-  \\"names\\": []
-}
-"
-`;
-
-exports[`Transformer tests Process Sync Should match transformed snapshot 2`] = `
+exports[`Transformer tests Process Sync Should match transformed snapshot for node file 1`] = `
 "var import_index = require(\\"./index\\");
 it(\\"Should calculate 1 + 1 = 2\\", () => {
   const result = (0, import_index.addNumber)(1, 1);
@@ -19,17 +9,65 @@ it(\\"Should calculate 1 + 1 = 2\\", () => {
 "
 `;
 
-exports[`Transformer tests Process async Should match transformed snapshot 1`] = `
-"{
-  \\"version\\": 3,
-  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node/index.test.ts\\"],
-  \\"mappings\\": \\"AAAA;AAEA,GAAG,8BAA8B,MAAM;AACrC,QAAM,SAAS,UAAU,GAAG,CAAC;AAC7B,SAAO,MAAM,EAAE,QAAQ,CAAC;AAC1B,CAAC;\\",
-  \\"names\\": []
-}
+exports[`Transformer tests Process Sync Should match transformed snapshot for react classic file 1`] = `
+"var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === \\"object\\" || typeof from === \\"function\\") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, \\"default\\", { value: mod, enumerable: true }) : target, mod));
+var React = __toESM(require(\\"react\\"));
+var import_react = require(\\"@testing-library/react\\");
+var import_FuncComp = __toESM(require(\\"./FuncComp\\"));
+describe(\\"FuncComp Component\\", () => {
+  it(\\"Should render correctly\\", () => {
+    (0, import_react.render)(/* @__PURE__ */ React.createElement(import_FuncComp.default, null));
+    const textElement = import_react.screen.getByText(/Test Component/i);
+    expect(textElement).toBeInTheDocument();
+  });
+});
 "
 `;
 
-exports[`Transformer tests Process async Should match transformed snapshot 2`] = `
+exports[`Transformer tests Process Sync Should match transformed snapshot for react classic file 2`] = `
+"var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === \\"object\\" || typeof from === \\"function\\") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, \\"default\\", { value: mod, enumerable: true }) : target, mod));
+var React = __toESM(require(\\"react\\"));
+var import_react = require(\\"@testing-library/react\\");
+var import_FuncComp = __toESM(require(\\"./FuncComp\\"));
+describe(\\"FuncComp Component\\", () => {
+  it(\\"Should render correctly\\", () => {
+    (0, import_react.render)(/* @__PURE__ */ React.createElement(import_FuncComp.default, null));
+    const textElement = import_react.screen.getByText(/Test Component/i);
+    expect(textElement).toBeInTheDocument();
+  });
+});
+"
+`;
+
+exports[`Transformer tests Process async Should match transformed snapshot 1`] = `
 "import { addNumber } from \\"./index\\";
 it(\\"Should calculate 1 + 1 = 2\\", () => {
   const result = addNumber(1, 1);

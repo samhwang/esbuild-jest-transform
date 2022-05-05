@@ -21,16 +21,14 @@ function getTransformConfig(sourcePath: string, options?: Options) {
   return { Transformer, config };
 }
 
+function getExampleFile(filePath: string) {
+  const examplePath = path.resolve(__dirname, '..', '..', '..', 'examples');
+
+  return path.resolve(examplePath, filePath);
+}
+
 describe('Transformer tests', () => {
-  const tsfile = path.resolve(
-    __dirname,
-    '..',
-    '..',
-    '..',
-    'examples',
-    'node',
-    'index.test.ts'
-  );
+  const nodeFile = getExampleFile('node/index.test.ts');
 
   describe('Process Sync', () => {
     function processSync(sourcePath: string, options?: Options) {
@@ -45,7 +43,7 @@ describe('Transformer tests', () => {
     }
 
     it('Should have sourcemap inline as default', () => {
-      const output = processSync(tsfile, { sourcemap: undefined });
+      const output = processSync(nodeFile, { sourcemap: undefined });
       expect(output.map).toEqual('');
       expect(output.code).toContain(
         '//# sourceMappingURL=data:application/json;base64,'
@@ -53,7 +51,7 @@ describe('Transformer tests', () => {
     });
 
     it('Should correctly get sourcemap as inline if provided', () => {
-      const output = processSync(tsfile, { sourcemap: 'inline' });
+      const output = processSync(nodeFile, { sourcemap: 'inline' });
       expect(output.map).toEqual('');
       expect(output.code).toContain(
         '//# sourceMappingURL=data:application/json;base64,'
@@ -61,18 +59,32 @@ describe('Transformer tests', () => {
     });
 
     it('Should get sourcemap as object if true is passed', () => {
-      const output = processSync(tsfile, { sourcemap: true });
-      const mapObject = JSON.parse(output.map);
-      expect(mapObject).toHaveProperty('version');
-      expect(mapObject).toHaveProperty('sources');
-      expect(mapObject).toHaveProperty('mappings');
-      expect(mapObject).toHaveProperty('names');
+      const output = processSync(nodeFile, { sourcemap: true });
+      expect(output.map).toHaveProperty('version');
+      expect(output.map).toHaveProperty('sources');
+      expect(output.map).toHaveProperty('mappings');
+      expect(output.map).toHaveProperty('names');
     });
 
-    it('Should match transformed snapshot', () => {
-      const output = processSync(tsfile, { sourcemap: true });
-      expect(output.map).toMatchSnapshot();
+    it('Should match transformed snapshot for node file', () => {
+      const output = processSync(nodeFile);
       expect(output.code).toMatchSnapshot();
+    });
+
+    it('Should match transformed snapshot for react classic file', () => {
+      const reactClassicFuncComp = getExampleFile(
+        'react-classic/src/FuncComp.test.tsx'
+      );
+
+      const reactClassicClassComp = getExampleFile(
+        'react-classic/src/FuncComp.test.tsx'
+      );
+
+      const output1 = processSync(reactClassicFuncComp);
+      expect(output1.code).toMatchSnapshot();
+
+      const output2 = processSync(reactClassicClassComp);
+      expect(output2.code).toMatchSnapshot();
     });
   });
 
@@ -89,8 +101,7 @@ describe('Transformer tests', () => {
     }
 
     it('Should match transformed snapshot', async () => {
-      const output = await processAsync(tsfile, { sourcemap: true });
-      expect(output.map).toMatchSnapshot();
+      const output = await processAsync(nodeFile, { sourcemap: true });
       expect(output.code).toMatchSnapshot();
     });
   });
