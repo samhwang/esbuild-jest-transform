@@ -3,7 +3,7 @@
 exports[`Transformer tests Process Sync Should match transformed snapshot 1`] = `
 "{
   \\"version\\": 3,
-  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node-ts/index.test.ts\\"],
+  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node/index.test.ts\\"],
   \\"mappings\\": \\"AAAA,mBAA0B;AAE1B,GAAG,8BAA8B,MAAM;AACrC,QAAM,SAAS,4BAAU,GAAG,CAAC;AAC7B,SAAO,MAAM,EAAE,QAAQ,CAAC;AAC1B,CAAC;\\",
   \\"names\\": []
 }
@@ -22,7 +22,7 @@ it(\\"Should calculate 1 + 1 = 2\\", () => {
 exports[`Transformer tests Process async Should match transformed snapshot 1`] = `
 "{
   \\"version\\": 3,
-  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node-ts/index.test.ts\\"],
+  \\"sources\\": [\\"/Users/samhwang/projects/personal/esbuild-jest/esbuild-jest-transform/examples/node/index.test.ts\\"],
   \\"mappings\\": \\"AAAA;AAEA,GAAG,8BAA8B,MAAM;AACrC,QAAM,SAAS,UAAU,GAAG,CAAC;AAC7B,SAAO,MAAM,EAAE,QAAQ,CAAC;AAC1B,CAAC;\\",
   \\"names\\": []
 }

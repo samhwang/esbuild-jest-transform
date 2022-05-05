@@ -1,5 +1,5 @@
 {
   "parserOptions": {
-    "project": "./jsconfig.json"
+    "project": "./tsconfig.json"
   }
 }

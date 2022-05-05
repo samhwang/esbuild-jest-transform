@@ -1,5 +1,5 @@
 {
-  "name": "react-js-classic-example",
+  "name": "react-automatic-example",
   "scripts": {
     "test": "jest"
   },
@@ -7,6 +7,9 @@
     "@samhwang/esbuild-jest-transform": "workspace:*",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
+    "@types/node": "^17.0.29",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
     "esbuild": "^0.14.30",
     "jest": "^27.5.1"
   },

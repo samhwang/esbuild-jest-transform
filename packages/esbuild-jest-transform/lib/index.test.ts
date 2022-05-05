@@ -12,8 +12,10 @@ function getTransformConfig(sourcePath: string, options?: TransformerOptions) {
   });
 
   const config: TransformOptions = {
-    ...defaults,
-    cwd: path.resolve(),
+    config: {
+      ...defaults,
+      cwd: path.resolve(),
+    },
   } as any;
 
   return { Transformer, config };
@@ -26,7 +28,7 @@ describe('Transformer tests', () => {
     '..',
     '..',
     'examples',
-    'node-ts',
+    'node',
     'index.test.ts'
   );
 
