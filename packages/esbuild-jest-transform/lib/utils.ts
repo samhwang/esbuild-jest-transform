@@ -15,7 +15,11 @@ function getDefaultTarget(): string {
 
 function getFileExtensions(fileName: string): string {
   const baseName = path.basename(fileName);
-  return path.extname(baseName).replace(/(\.[a-z0-9]+).*/i, '$1');
+  const firstDot = baseName.indexOf('.');
+  const lastDot = baseName.lastIndexOf('.');
+  const hasOneDot = firstDot === lastDot;
+
+  return hasOneDot ? baseName.slice(lastDot - 1) : baseName.slice(firstDot);
 }
 
 function getDefaultLoader(extension: Loader): Loader {
@@ -26,10 +30,11 @@ function getLoaderFromFilename(
   filename: string,
   loaders?: Options['loaders']
 ): Loader {
-  const extension = getFileExtensions(filename).slice(1);
-  return loaders && loaders[extension]
-    ? loaders[extension]
-    : getDefaultLoader(extension as Loader);
+  const fullExtension = getFileExtensions(filename);
+  const extension = path.extname(filename);
+  return loaders && loaders[fullExtension]
+    ? loaders[fullExtension]
+    : getDefaultLoader(extension.slice(1) as Loader);
 }
 
 function getSourcemapOptions(
