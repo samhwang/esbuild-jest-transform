@@ -3,6 +3,7 @@ import createCacheKey from '@jest/create-cache-key-function';
 import { Transformer } from '@jest/transform';
 import { transformSync, transform } from 'esbuild';
 import { buildEsbuildTransformOpts, Options } from './utils';
+import { babelTransform, babelTransformAsync } from './babel';
 
 export type { Options };
 
@@ -18,11 +19,12 @@ function createTransformer(transformerOptions?: Options): Transformer {
         ...esbuildOpts,
         format: jestOpts.supportsStaticESM ? 'esm' : 'cjs',
       });
+      const mapObj = map.length >= 2 ? JSON.parse(map) : map;
 
-      return {
-        code,
-        map: map.length >= 2 ? JSON.parse(map) : map,
-      };
+      return babelTransform(code, filename, {
+        inputSourceMap: mapObj,
+        sourceMaps: transformerOptions?.sourcemap,
+      });
     },
     async processAsync(content, filename) {
       const esbuildOpts = buildEsbuildTransformOpts(
@@ -35,11 +37,12 @@ function createTransformer(transformerOptions?: Options): Transformer {
         // Async transform is always going to be esm
         format: 'esm',
       });
+      const mapObj = map.length >= 2 ? JSON.parse(map) : map;
 
-      return {
-        code,
-        map: map.length >= 2 ? JSON.parse(map) : map,
-      };
+      return babelTransformAsync(code, filename, {
+        inputSourceMap: mapObj,
+        sourceMaps: transformerOptions?.sourcemap,
+      });
     },
     getCacheKey(content, filename, options) {
       const esbuildOpts = buildEsbuildTransformOpts(filename);

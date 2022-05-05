@@ -5,7 +5,7 @@ import { DEFAULT_LOADERS, DEFAULT_NODE_TARGETS } from './defaults';
 
 export interface Options extends Omit<ESBuildOptions, 'loader'> {
   loaders?: Record<string, Loader>;
-  sourcemap?: Exclude<ESBuildOptions['sourcemap'], 'linked'>;
+  sourcemap?: Exclude<ESBuildOptions['sourcemap'], 'linked' | 'external'>;
 }
 
 function getDefaultTarget(): string {
