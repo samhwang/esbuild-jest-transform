@@ -2,13 +2,11 @@ import * as crypto from 'node:crypto';
 import createCacheKey from '@jest/create-cache-key-function';
 import { Transformer } from '@jest/transform';
 import { transformSync, transform } from 'esbuild';
-import { buildEsbuildTransformOpts, TransformerOptions } from './utils';
+import { buildEsbuildTransformOpts, Options } from './utils';
 
-export type { TransformerOptions };
+export type { Options };
 
-function createTransformer(
-  transformerOptions?: TransformerOptions
-): Transformer {
+function createTransformer(transformerOptions?: Options): Transformer {
   return {
     process(content, filename, jestOpts) {
       const esbuildOpts = buildEsbuildTransformOpts(

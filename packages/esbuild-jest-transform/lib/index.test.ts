@@ -2,9 +2,9 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { TransformOptions } from '@jest/transform';
 import { defaults } from 'jest-config';
-import transformer, { TransformerOptions } from './index';
+import transformer, { Options } from './index';
 
-function getTransformConfig(sourcePath: string, options?: TransformerOptions) {
+function getTransformConfig(sourcePath: string, options?: Options) {
   const Transformer = transformer.createTransformer({
     format: 'cjs',
     sourcemap: true,
@@ -33,7 +33,7 @@ describe('Transformer tests', () => {
   );
 
   describe('Process Sync', () => {
-    function processSync(sourcePath: string, options?: TransformerOptions) {
+    function processSync(sourcePath: string, options?: Options) {
       const content = fs.readFileSync(sourcePath, 'utf-8');
 
       const { Transformer, config } = getTransformConfig(sourcePath, options);
@@ -77,7 +77,7 @@ describe('Transformer tests', () => {
   });
 
   describe('Process async', () => {
-    function processAsync(sourcePath: string, options?: TransformerOptions) {
+    function processAsync(sourcePath: string, options?: Options) {
       const content = fs.readFileSync(sourcePath, 'utf-8');
 
       const { Transformer, config } = getTransformConfig(sourcePath, options);

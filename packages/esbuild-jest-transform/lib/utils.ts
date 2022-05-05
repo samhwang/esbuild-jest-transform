@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import { Loader, TransformOptions as ESBuildOptions } from 'esbuild';
 import { DEFAULT_LOADERS, DEFAULT_NODE_TARGETS } from './defaults';
 
-export interface TransformerOptions extends Omit<ESBuildOptions, 'loader'> {
+export interface Options extends Omit<ESBuildOptions, 'loader'> {
   loaders?: Record<string, Loader>;
   sourcemap?: Exclude<ESBuildOptions['sourcemap'], 'linked'>;
 }
@@ -22,9 +22,19 @@ function getDefaultLoader(extension: Loader): Loader {
   return DEFAULT_LOADERS.includes(extension) ? extension : 'text';
 }
 
+function getLoaderFromFilename(
+  filename: string,
+  loaders?: Options['loaders']
+): Loader {
+  const extension = getFileExtensions(filename).slice(1);
+  return loaders && loaders[extension]
+    ? loaders[extension]
+    : getDefaultLoader(extension as Loader);
+}
+
 function getSourcemapOptions(
-  sourcemap?: TransformerOptions['sourcemap']
-): Partial<TransformerOptions> {
+  sourcemap?: Options['sourcemap']
+): Partial<Options> {
   if (!sourcemap) {
     return { sourcemap: 'inline' };
   }
@@ -41,19 +51,19 @@ function getSourcemapOptions(
 
 export function buildEsbuildTransformOpts(
   filename: string,
-  options?: TransformerOptions
+  options: Options = {}
 ): ESBuildOptions {
-  const sourcemapOpts = getSourcemapOptions(options?.sourcemap);
-  const target = options?.target ?? getDefaultTarget();
-
-  const extension = getFileExtensions(filename).slice(1);
-  const loader: Loader =
-    options?.loaders && options.loaders[extension]
-      ? options.loaders[extension]
-      : getDefaultLoader(extension as Loader);
+  const {
+    sourcemap,
+    target = getDefaultTarget(),
+    loaders,
+    ...esbuildOptions
+  } = options;
+  const sourcemapOpts = getSourcemapOptions(sourcemap);
+  const loader = getLoaderFromFilename(filename, loaders);
 
   return {
-    ...options,
+    ...esbuildOptions,
     target,
     loader,
     sourcefile: filename,
